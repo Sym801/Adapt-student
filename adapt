@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adapt Student KZ - Пәндер</title>
+<style>
+*{box-sizing:border-box;font-family:Arial,sans-serif}
+body{margin:0;background:#f4f7fb;color:#222}
+header{background:#173b68;color:#fff;padding:18px;text-align:center;position:sticky;top:0;z-index:10}
+header h1{margin:0;font-size:22px}
+nav{display:flex;gap:8px;overflow-x:auto;background:#fff;padding:10px;position:sticky;top:72px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+nav button{border:0;background:#eef2f7;padding:10px 14px;border-radius:20px;cursor:pointer;white-space:nowrap;font-weight:bold}
+nav button.active{background:#173b68;color:#fff}
+main{max-width:1000px;margin:auto;padding:15px}
+.panel{display:none}.panel.active{display:block}
+.card{background:#fff;border-radius:14px;padding:16px;margin:12px 0;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.card h3{color:#173b68;margin-top:0}
+.tag{display:inline-block;background:#ffc107;padding:4px 10px;border-radius:12px;font-size:12px;font-weight:bold}
+details{background:#f0f4f9;border-radius:10px;padding:10px;margin:8px 0}
+summary{font-weight:bold;cursor:pointer;color:#173b68}
+table{width:100%;border-collapse:collapse;background:#fff}
+td,th{border:1px solid #ddd;padding:9px;text-align:left;font-size:14px}
+th{background:#173b68;color:#fff}
+.tip{background:#fff3cd;border-left:5px solid #ffc107;padding:12px;border-radius:10px;margin:10px 0}
+button.main{background:#173b68;color:#fff;border:0;padding:12px;border-radius:10px;width:100%;font-weight:bold;cursor:pointer}
+</style>
+</head>
+<body>
+<header><h1>🎓 Adapt Student KZ</h1><p>Пәндерді оқып үйрену • Бейімделу • Уақыт</p></header>
+<nav>
+<button class="tab active" data-id="home">🏠 Басты</button>
+<button class="tab" data-id="study">📚 Пәндер</button>
+<button class="tab" data-id="adapt">🌱 Бейімделу</button>
+<button class="tab" data-id="time">⏰ Уақыт</button>
+</nav>
+<main>
+<section id="home" class="panel active">
+<div class="card"><h3>Сайтта қандай пәндер бар?</h3>
+<p>Бұл сайтта сенің 1-курстағы негізгі 8 пәніңнің бәрі бар. Әр пәнді бас – ішінде тақырыптар, қалай оқу керек, емтиханда не сұралады – бәрі жазылған.</p>
+<p><span class="tag">Анатомия</span> <span class="tag">Физиология</span> <span class="tag">Биохимия</span> <span class="tag">Гистология</span> <span class="tag">Микробиология</span> <span class="tag">Латын тілі</span> <span class="tag">Биостатистика</span> <span class="tag">Психология / Қоғамдық денсаулық</span></p>
+</div>
+<div class="card"><h3>Қалай оқисың?</h3><p>1. Пәндер бөліміне кір → 2. Бүгінгі пәніңді тап → 3. Тақырыпты оқы → 4. Кесте бойынша 25 минут оқы (Помодоро) → 5. Тестпен өзіңді тексер.</p></div>
+</section>
+
+<section id="study" class="panel">
+<h2>📚 Пәндер – толық тізім</h2>
+
+<!-- 1 АНАТОМИЯ -->
+<div class="card"><h3>🦴 1. Анатомия – Адам денесінің құрылысы</h3>
+<p><b>Мақсаты:</b> Сүйек, бұлшықет, органдарды латынша атап, денеден көрсету.</p>
+<details><summary>📖 Тақырыптар – басып аш</summary>
+<p>• Остеология – сүйектер: бас сүйек, омыртқа, қол-аяқ сүйектері<br>
+• Миология – бұлшықеттер: бет, арқа, қол, аяқ<br>
+• Спланхнология – ішкі органдар: жүрек, өкпе, бауыр, бүйрек<br>
+• Ангиология – қан тамырлары, жүрек<br>
+• Неврология – ми, жұлын, нервтер</p>
+</details>
+<details><summary>💡 Қалай оқу керек?</summary>
+<p>1. Сурет салып жатта. 2. Өз денеңнен көрсет. 3. Күнде 10 латын сөзі. 4. Атлас + Complete Anatomy приложениясы. 5. Топпен препарат көрсетіп жатта.</p>
+</details>
+<details><summary>🎯 Емтиханда не сұралады?</summary>
+<p>Препаратты көрсету, латынша атын айту, қай жерде орналасқанын түсіндіру. Тек кітап оқып өтпейсің.</p>
+</details>
+</div>
+
+<!-- 2 ФИЗИОЛОГИЯ -->
+<div class="card"><h3>🩸 2. Физиология – Ағза қалай жұмыс істейді?</h3>
+<p><b>Мақсаты:</b> Жүрек неге соғады, қан неге айналады, тыныс қалай алынады – соны түсіну.</p>
+<details><summary>📖 Тақырыптар</summary>
+<p>• Қан физиологиясы: эритроцит, лейкоцит, тромбоцит, қан топтары<br>
+• Жүрек-қантамыр: жүрек циклы, қысым, пульс<br>
+• Тыныс: өкпе көлемі, газ алмасу<br>
+• Ас қорыту: ферменттер, сіңіру<br>
+• Бүйрек: зәр түзілу, гомеостаз<br>
+• Жүйке және эндокриндік жүйе: гормондар</p>
+</details>
+<details><summary>💡 Қалай оқу керек?</summary>
+<p>Сұлба сыз! "Жүрек → қан → орган → қайта жүрек" деп. Өзіңе дауыстап түсіндір. Түсіндіре алмасаң – білмейсің.</p>
+</details>
+<details><summary>🎯 Емтихан мысалы</summary>
+<p>Қан қысымы неге көтеріледі? Жауап: тамыр тарылды → кедергі өсті → қысым өсті.</p>
+</details>
+</div>
+
+<!-- 3 БИОХИМИЯ -->
+<div class="card"><h3>🧬 3. Биохимия – Жасуша ішіндегі химия</h3>
+<details><summary>📖 Тақырыптар</summary>
+<p>• Ақуыздар, майлар, көмірсулар<br>
+• Ферменттер, витаминдер<br>
+• Гликолиз, Кребс циклы, тыныс тізбегі<br>
+• Гормондардың биохимиясы<br>
+• Бауыр, қан биохимиясы</p>
+</details>
+<details><summary>💡 Қалай оқу керек?</summary>
+<p>Әр циклды 1 параққа сыйғыз. Күнде 1 цикл. Витаминді тамақпен жатта: С – лимон, Д – күн, А – сәбіз.</p>
+</details>
+</div>
+
+<!-- 4 ГИСТОЛОГИЯ -->
+<div class="card"><h3>🔬 4. Гистология – Ұлпалар туралы ғылым</h3>
+<details><summary>📖 Тақырыптар</summary>
+<p>• Эпителий ұлпасы<br>
+• Дәнекер ұлпасы: сүйек, шеміршек, қан<br>
+• Бұлшықет ұлпасы<br>
+• Жүйке ұлпасы<br>
+• Органдардың микроқұрылысы</p>
+</details>
+<details><summary>💡 Қалай оқу керек?</summary>
+<p>Әр ұлпаның 3 белгісі: түсі + пішіні + қайда орналасқаны. Микроскоп суретін салып, астына жазып қой.</p>
+</details>
+</div>
+
+<!-- 5 МИКРОБИОЛОГИЯ -->
+<div class="card"><h3>🧫 5. Микробиология – Микробтар</h3>
+<details><summary>📖 Тақырыптар</summary>
+<p>• Бактериялар: Staphylococcus, Streptococcus, E.coli<br>
+• Вирустар: тұмау, гепатит, ВИЧ<br>
+• Саңырауқұлақтар, паразиттер<br>
+• Иммунитет, вакцина<br>
+• Антибиотиктер</p>
+</details>
+<details><summary>💡 Кесте жасап жатта</summary>
+<table><tr><th>Микроб</th><th>Ауруы</th><th>Емі</th></tr>
+<tr><td>Staphylococcus</td><td>Ірің, фурункул</td><td>Антибиотик</td></tr>
+<tr><td>Streptococcus</td><td>Ангина, скарлатина</td><td>Пенициллин</td></tr>
+<tr><td>E.coli</td><td>Ішек инфекциясы</td><td>Диета + дәрі</td></tr></table>
+</details>
+</div>
+
+<!-- 6 ЛАТЫН -->
+<div class="card"><h3>🇱🇻 6. Латын тілі – Дәрігердің тілі</h3>
+<details><summary>📖 Тақырыптар</summary>
+<p>• Анатомиялық терминдер: osteo – сүйек, myo – бұлшықет, cardio – жүрек<br>
+• Рецепт жазу: Rp, D.t.d, S.<br>
+• Клиникалық терминдер: gastritis, bronchitis, hepatitis</p>
+</details>
+<details><summary>💡 Қалай оқу керек?</summary>
+<p>Күнде 15 сөз. Телефонға стикер жабыстыр. Тек жазба, дауыстап айт. Латынсыз анатомияны түсінбейсің.</p>
+</details>
+</div>
+
+<!-- 7 БИОСТАТИСТИКА -->
+<div class="card"><h3>🧮 7. Биостатистика және Информатика</h3>
+<details><summary>📖 Тақырыптар</summary>
+<p>• Орташа мән, медиана, мода<br>
+• Дисперсия, сенімділік интервалы<br>
+• Кесте, график құру, Excel<br>
+• Зерттеу түрлері</p>
+</details>
+<details><summary>💡 Қалай оқу керек?</summary>
+<p>Формуланы жаттама, есеп шығар. 1 формуланы 5 есепке қолдансаң, өзі есте қалады.</p>
+</details>
+</div>
+
+<!-- 8 ПСИХОЛОГИЯ -->
+<div class="card"><h3>🧠 8. Психология және Қоғамдық денсаулық</h3>
+<details><summary>📖 Тақырыптар</summary>
+<p>• Дәрігер-науқас қарым-қатынасы<br>
+• Стресс, выгорание, эмпатия<br>
+• Денсаулық сақтау жүйесі<br>
+• Профилактика, скрининг<br>
+• Медициналық этика</p>
+</details>
+<details><summary>💡 Қалай оқу керек?</summary>
+<p>Өмірмен байланыстыр. Өзің дәрігер болдың деп елестетіп, науқасқа қалай түсіндірер едің – солай жаз.</p>
+</details>
+</div>
+
+<div class="tip"><b>Есте сақта:</b> Ең қиын 3 пән – Анатомия, Биохимия, Физиология. Оларға күніне ең көп уақыт бөлу керек. Қалғанын кесте бойынша оқисың.</div>
+</section>
+
+<section id="adapt" class="panel">
+<h2>🌱 Бейімделу</h2>
+<div class="card"><h3>Мектеп ≠ Университет</h3><p>Мектепте мұғалім қуып жүреді, университетте өзің жауаптысың. Өзіңе күнделік арна: кеше не оқыдым, бүгін не оқимын?</p></div>
+<div class="card"><h3>Стресс болса не істеу керек?</h3><p>Күнде 10 мин серуен, ата-анаға қоңырау, музыка. 2 аптадан аса жылап жүрсең – психологқа бару ұят емес.</p></div>
+<div class="card"><h3>Топпен оқу</h3><p>Жалғыз оқығаннан топпен оқыған 2 есе тез. Бір-біріңе түсіндірсең, 90% есте қалады.</p></div>
+</section>
+
+<section id="time" class="panel">
+<h2>⏰ Уақытты басқару</h2>
+<div class="card"><h3>🍅 Помодоро: 25 мин оқы + 5 мин демал</h3><p>4 рет қайтала = 1 цикл. Сосын 30 мин демал. Телефонды басқа бөлмеге қой.</p></div>
+<div class="card"><h3>📅 Идеал кесте</h3><p>07:00 ояну • 08:00-13:00 сабақ • 14:00-16:00 ең қиын пән • 16:00-17:00 спорт • 19:00-21:00 қайталау • 23:00 ұйқы</p></div>
+<div class="card"><h3>📱 Телефон</h3><p>Күніне 4 сағат телефон = 1 пәнді оқып шығуға болатын уақыт. Сабақта ұшақ режимі!</p></div>
+</section>
+</main>
+<footer>Adapt Student KZ • 2026 • Сәттілік! 💙</footer>
+<script>
+document.querySelectorAll('.tab').forEach(b=>{b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.getElementById(b.dataset.id).classList.add('active');window.scrollTo(0,0);}});
+</script>
+</body>
+</html>
