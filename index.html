@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+
+<html lang="kk">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Adapt Student | Медициналық білім платформасы</title>
+
+<style>
+
+*{box-sizing:border-box}
+
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#263449}
+
+header{background:linear-gradient(135deg,#173d70,#2876ad);color:white;padding:28px 18px}
+
+header h1{font-size:28px;margin:0 0 10px}
+
+header p{line-height:1.5;margin:0;color:#e0edff}
+
+.container{max-width:1050px;margin:auto;padding:20px}
+
+.search{width:100%;padding:14px;border:1px solid #ccd7e5;border-radius:12px;font-size:16px;margin:10px 0 20px}
+
+nav{display:flex;gap:8px;overflow-x:auto;padding:5px 0 15px}
+
+nav button,.btn{border:0;border-radius:9px;padding:12px 16px;background:#e1eaf5;color:#23466e;font-weight:bold;cursor:pointer}
+
+nav button.active,.btn{background:#246da8;color:white}
+
+h2{font-size:23px}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+
+.card{background:white;padding:19px;border-radius:14px;border:1px solid #e2e9f1;box-shadow:0 3px 12px #173d700b}
+
+.card h3{margin:5px 0 10px;color:#205b91}
+
+.card p{line-height:1.55;color:#53647a}
+
+.card button{margin-top:8px}
+
+.section{display:none}
+
+.section.active{display:block}
+
+.subject{cursor:pointer;transition:.2s}
+
+.subject:hover{transform:translateY(-3px)}
+
+.emoji{font-size:30px}
+
+.tag{font-size:12px;background:#e8f2fc;color:#28679b;padding:5px 9px;border-radius:20px}
+
+.lesson{background:white;padding:20px;border-radius:13px;line-height:1.8;margin:12px 0}
+
+.question{background:white;padding:18px;border-radius:12px;margin:13px 0}
+
+.question label{display:block;padding:9px;margin:5px 0;background:#f1f5fa;border-radius:8px;cursor:pointer}
+
+input[type=radio]{margin-right:8px}
+
+.result{font-weight:bold;margin-top:15px}
+
+footer{text-align:center;color:#74849a;padding:30px}
+
+.progress{height:10px;background:#e2eaf3;border-radius:10px;overflow:hidden}
+
+.progress div{height:100%;background:#2b9b79;width:0}
+
+.small{font-size:13px;color:#718198}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>🎓 Adapt Student</h1>
+
+<p>Медициналық білімге қадам бас! Оқы, үйрен, қайтала және өз біліміңді тексер.</p>
+
+<p style="margin-top:12px">Болашақ медицина мамандарына арналған қазақша білім беру платформасы</p>
+
+</header>
+
+<div class="container">
+
+<input class="search" id="search" placeholder="🔍 Пәнді немесе тақырыпты іздеу..." oninput="searchItems()">
+
+<nav>
+
+<button class="active" onclick="showPage('home',this)">Басты бет</button>
+
+<button onclick="showPage('subjects',this)">Пәндер</button>
+
+<button onclick="showPage('tests',this)">Тесттер</button>
+
+<button onclick="showPage('tasks',this)">Тапсырмалар</button>
+
+<button onclick="showPage('progress',this)">Менің оқуым</button>
+
+</nav>
+
+<section id="home" class="section active">
+
+<h2>Қош келдің, студент! 👋</h2>
+
+<div class="card">
+
+<h3>Білім алу ешқашан тоқтамайды!</h3>
+
+<p>Бұл платформа медициналық университет студенттеріне пәндерді түсінуге, теорияны қайталауға және алған білімдерін тест арқылы тексеруге көмектеседі.</p>
+
+<button class="btn" onclick="showPage('subjects',document.querySelectorAll('nav button')[1])">Оқуды бастау →</button>
+
+</div>
+
+<h2>📚 Оқу пәндері</h2>
+
+<div class="grid" id="homeSubjects"></div>
+
+<h2>🎯 Бүгінгі мақсат</h2>
+
+<div class="card">
+
+<p>Кемінде бір тақырыпты оқып, 5 тест сұрағына жауап бер!</p>
+
+<p class="small">Күнделікті қайталау білімді бекітуге көмектеседі.</p>
+
+</div>
+
+</section>
+
+<section id="subjects" class="section">
+
+<h2>📚 Медициналық пәндер</h2>
+
+<p>Өзіңе қажетті пәнді таңдап, теориялық материалдармен таныс.</p>
+
+<div class="grid" id="subjectList"></div>
+
+<div id="lessonArea"></div>
+
+</section>
+
+<section id="tests" class="section">
+
+<h2>📝 Білімді тексеру</h2>
+
+<p>Сұрақтарға жауап бер. Соңында нәтижеңді көре аласың.</p>
+
+<div id="quizArea"></div>
+
+<button class="btn" onclick="checkQuiz()">Жауаптарды тексеру</button>
+
+<div id="quizResult" class="result"></div>
+
+</section>
+
+<section id="tasks" class="section">
+
+<h2>✍️ Өзіндік тапсырмалар</h2>
+
+<p>Тақырыпты тереңірек меңгеру үшін тапсырмаларды орында.</p>
+
+<div class="grid" id="taskList"></div>
+
+</section>
+
+<section id="progress" class="section">
+
+<h2>📊 Менің оқу көрсеткішім</h2>
+
+<div class="card">
+
+<h3>Орындалған тапсырмалар</h3>
+
+<h2 id="completed">0</h2>
+
+<div class="progress"><div id="progressBar"></div></div>
+
+<p id="progressText">Оқуды баста!</p>
+
+</div>
+
+<div class="card" style="margin-top:15px">
+
+<h3>Тест нәтижесі</h3>
+
+<p id="testScore">Әзірге тест тапсырылған жоқ.</p>
+
+</div>
+
+</section>
+
+</div>
+
+<footer>Adapt Student © 2026 | Білім — болашақтың негізі</footer>
+
+<script>
+
+const subjects=[
+
+{
+
+name:"Анатомия",icon:"🦴",desc:"Адам ағзасының құрылысы мен мүшелер жүйесі.",
+
+topics:[
+
+["Адам қаңқасы","Адам қаңқасы осьтік және қосымша қаңқа бөлімдерінен тұрады. Осьтік қаңқаға бас сүйек, омыртқа жотасы және кеуде торы жатады. Қосымша қаңқаға жоғарғы және төменгі аяқ-қол сүйектері кіреді."],
+
+["Бұлшықет жүйесі","Бұлшықеттер қозғалысты қамтамасыз етеді. Қаңқа бұлшықеттері сүйектерге сіңір арқылы бекінеді. Бұлшықеттердің негізгі қасиеттері: қозғыштық, жиырылғыштық, созылғыштық және серпімділік."],
+
+["Жүрек-қантамыр жүйесі","Жүрек төрт камерадан тұрады: екі жүрекше және екі қарынша. Қанайналымның үлкен шеңбері сол жақ қарыншадан басталып, оң жақ жүрекшеде аяқталады. Кіші шеңбер оң жақ қарыншадан басталып, сол жақ жүрекшеде аяқталады."],
+
+["Тыныс алу жүйесі","Тыныс алу жүйесіне мұрын қуысы, жұтқыншақ, көмей, кеңірдек, бронхтар және өкпе жатады. Өкпедегі альвеолаларда газ алмасу жүреді."],
+
+["Ас қорыту жүйесі","Ас қорыту жүйесі ауыз қуысынан басталып, жұтқыншақ, өңеш, асқазан, аш және тоқ ішек арқылы жалғасады. Бауыр мен ұйқыбез ас қорытуға қатысады."]
+
+]},
+
+{
+
+name:"Гистология",icon:"🔬",desc:"Жасушалар, ұлпалар және мүшелердің микроскопиялық құрылысы.",
+
+topics:[
+
+["Эпителий ұлпасы","Эпителий ұлпасы дененің сыртқы бетін жауып, ішкі мүшелер мен қуыстарды астарлайды. Жасушалары тығыз орналасады, жасушааралық заты аз. Негізгі қызметтері: қорғаныш, сіңіру, секреция және экскреция."],
+
+["Дәнекер ұлпа","Дәнекер ұлпаның жасушалары мен жасушааралық заты болады. Оған борпылдақ және тығыз талшықты ұлпа, шеміршек, сүйек және қан жатады. Негізгі қызметтері: тіректік, трофикалық, қорғаныш."],
+
+["Бұлшықет ұлпасы","Бұлшықет ұлпасы жиырылу қызметін атқарады. Үш түрі бар: бірыңғай салалы, көлденең жолақты қаңқа және жүрек бұлшықет ұлпасы."],
+
+["Жүйке ұлпасы","Жүйке ұлпасы нейрондар мен нейроглиядан тұрады. Нейрон ақпаратты қабылдап, өңдеп және жүйке импульсін өткізеді. Нейрон денеден, дендриттерден және аксоннан тұрады."],
+
+["Қан ұлпасы","Қан плазмадан және формалық элементтерден тұрады. Формалық элементтерге эритроциттер, лейкоциттер және тромбоциттер жатады. Қан тасымалдау, қорғаныш және реттеуші қызмет атқарады."]
+
+]},
+
+{
+
+name:"Физиология",icon:"❤️",desc:"Ағза мүшелері мен жүйелерінің қызметін зерттейді.",
+
+topics:[
+
+["Жасуша мембранасының потенциалы","Тыныштық потенциалы — қозбайтын жасуша мембранасының ішкі және сыртқы беттері арасындағы электрлік потенциалдар айырмасы. Оның қалыптасуына иондардың мембрана арқылы әртүрлі таралуы және мембрананың таңдамалы өткізгіштігі қатысады."],
+
+["Жүрек физиологиясы","Жүрек автоматия, қозғыштық, өткізгіштік және жиырылғыштық қасиеттеріне ие. Жүрек циклі жүрекшелердің систоласы, қарыншалардың систоласы және жалпы диастоладан тұрады."],
+
+["Тыныс алу физиологиясы","Тыныс алу — ағза мен сыртқы орта арасындағы газ алмасу процесі. Ол өкпелік вентиляция, өкпедегі газ алмасу, газдардың қанмен тасымалдануы және ұлпалардағы газ алмасудан тұрады."],
+
+["Ас қорыту физиологиясы","Ас қорыту кезінде тағам механикалық және химиялық өңдеуден өтеді. Ферменттер күрделі қоректік заттарды қарапайым молекулаларға дейін ыдыратады."],
+
+["Жүйке жүйесінің физиологиясы","Жүйке жүйесі ағза қызметін реттейді және мүшелердің өзара байланысын қамтамасыз етеді. Негізгі құрылымдық-қызметтік бірлігі — нейрон."]
+
+]},
+
+{
+
+name:"Медициналық химия",icon:"⚗️",desc:"Химиялық процестердің тірі ағзадағы маңызы.",
+
+topics:[
+
+["Ерітінділер","Ерітінді еріткіш пен еріген заттан тұратын біртекті жүйе. Концентрация ерітінді құрамындағы еріген зат мөлшерін сипаттайды."],
+
+["Қышқылдар мен негіздер","Қышқылдар ерітіндіде сутек иондарын түзеді, ал негіздер протонды қабылдайды немесе гидроксид иондарын береді. Қышқылдық пен сілтілікті сипаттайтын негізгі көрсеткіш — pH."],
+
+["Буферлік жүйелер","Буферлік жүйелер ерітіндіге аз мөлшерде қышқыл немесе негіз қосылғанда pH өзгерісін тежейді. Қанның негізгі буферлік жүйелеріне бикарбонаттық, фосфаттық және ақуыздық жүйелер жатады."],
+
+["Биологиялық маңызды элементтер","Кальций, натрий, калий, магний, темір және басқа элементтер ағзадағы маңызды процестерге қатысады. Мысалы, темір гемоглобин құрамына кіреді, ал кальций сүйек тінінің құрамында болады."],
+
+["Ақуыздар мен аминқышқылдар","Ақуыздар аминқышқылдарынан құралған жоғары молекулалы органикалық қосылыстар. Олар ферменттік, құрылымдық, тасымалдаушы және қорғаныш қызметтер атқарады."]
+
+]},
+
+{
+
+name:"Биология және генетика",icon:"🧬",desc:"Тіршіліктің заңдылықтары және тұқымқуалаушылық.",
+
+topics:[
+
+["Жасушаның құрылысы","Жасуша — тіршіліктің құрылымдық және қызметтік бірлігі. Негізгі бөліктеріне плазмалық мембрана, цитоплазма және ядро жатады."],
+
+["ДНҚ құрылысы","ДНҚ — тұқымқуалаушылық ақпаратты сақтайтын молекула. Ол екі полинуклеотидтік тізбектен тұратын қос шиыршық құрылымға ие."],
+
+["Митоз және мейоз","Митоз нәтижесінде екі генетикалық жағынан ұқсас жасуша түзіледі. Мейоз кезінде хромосома саны екі есе азайып, жыныс жасушалары қалыптасады."],
+
+["Тұқымқуалаушылық","Тұқымқуалаушылық — ағзалардың белгілері мен қасиеттерін ұрпаққа беру қабілеті. Гендер тұқымқуалаушылық ақпараттың негізгі бірлігі болып саналады."]
+
+]},
+
+{
+
+name:"Микробиология",icon:"🦠",desc:"Микроорганизмдер және олардың қасиеттері.",
+
+topics:[
+
+["Бактериялардың құрылысы","Бактериялар — прокариотты ағзалар. Оларда қалыптасқан ядро болмайды. Генетикалық материалы цитоплазмадағы нуклеоид аймағында орналасады."],
+
+["Вирустар","Вирустар жасушалық құрылымы жоқ инфекциялық агенттер. Олар генетикалық материалдан және ақуыздық қабықшадан тұрады. Көбеюі тірі жасушаның ішінде жүреді."],
+
+["Иммунитет","Иммунитет — ағзаның бөгде заттар мен инфекциялық агенттерден қорғану қабілеті. Ол туа біткен және жүре пайда болған болып бөлінеді."],
+
+["Залалсыздандыру","Стерилизация — барлық микроорганизмдер мен олардың спораларын жою процесі. Дезинфекция патогенді микроорганизмдердің көпшілігін жоюға бағытталған."]
+
+]}
+
+];
+
+const quizzes=[
+
+{q:"Анатомия нені зерттейді?",o:["Ағзаның құрылысын","Химиялық реакцияларды","Жасушаның бөлінуін"],a:0},
+
+{q:"Адам қаңқасының осьтік бөлігіне не жатады?",o:["Қол сүйектері","Омыртқа жотасы","Аяқ сүйектері"],a:1},
+
+{q:"Жүрек неше камерадан тұрады?",o:["Екі","Үш","Төрт"],a:2},
+
+{q:"Гистология нені зерттейді?",o:["Ұлпаларды","Мінез-құлықты","Климатты"],a:0},
+
+{q:"Эпителий жасушалары қалай орналасады?",o:["Тығыз","Шашыраңқы","Тек талшық түрінде"],a:0},
+
+{q:"Қанның формалық элементтеріне не жатады?",o:["Нейрондар","Эритроциттер","Остеоциттер"],a:1},
+
+{q:"Жүйке ұлпасының негізгі жасушасы?",o:["Нейрон","Эритроцит","Хондроцит"],a:0},
+
+{q:"Бұлшықет ұлпасының негізгі қасиеті?",o:["Секреция","Жиырылғыштық","Сіңіру"],a:1},
+
+{q:"Тыныштық потенциалына қатысатын маңызды ион?",o:["Калий","Темір","Йод"],a:0},
+
+{q:"Өкпеде газ алмасу қайда жүреді?",o:["Кеңірдекте","Альвеолаларда","Көмейде"],a:1},
+
+{q:"Жүректің негізгі қасиеттерінің бірі?",o:["Автоматия","Фагоцитоз","Осмос"],a:0},
+
+{q:"Қанның негізгі буферлік жүйелерінің бірі?",o:["Бикарбонаттық","Липидтік","Көмірсулық"],a:0},
+
+{q:"Қанның pH көрсеткіші нені сипаттайды?",o:["Қышқылдық-сілтілік ортаны","Қан көлемін","Гемоглобин санын"],a:0},
+
+{q:"Гемоглобин құрамына қандай элемент кіреді?",o:["Кальций","Темір","Йод"],a:1},
+
+{q:"ДНҚ қандай ақпаратты сақтайды?",o:["Тұқымқуалаушылық","Жылу мөлшерін","Қан қысымын"],a:0},
+
+{q:"Митоз нәтижесінде неше жасуша түзіледі?",o:["Бір","Екі","Төрт"],a:1},
+
+{q:"Бактериялар қандай ағзалар?",o:["Прокариоттар","Эукариоттар","Көпжасушалы жануарлар"],a:0},
+
+{q:"Вирустар қайда көбейеді?",o:["Тек тірі жасушада","Суда өздігінен","Ауада"],a:0}
+
+];
+
+const tasks=[
+
+["Анатомия","Адам қаңқасының негізгі бөлімдерін сызба түрінде көрсет."],
+
+["Анатомия","Жүректің төрт камерасын атап, қан қозғалысының бағытын түсіндір."],
+
+["Анатомия","Тыныс алу жүйесінің мүшелерін ретімен жаз."],
+
+["Гистология","Эпителий ұлпасының бес негізгі қызметін жаз."],
+
+["Гистология","Дәнекер ұлпаның түрлерін салыстыратын кесте құрастыр."],
+
+["Гистология","Қанның формалық элементтерін және олардың қызметтерін сипатта."],
+
+["Физиология","Жүрек циклінің кезеңдерін сызба түрінде көрсет."],
+
+["Физиология","Тыныс алудың сыртқы және ішкі түрлерін салыстыр."],
+
+["Физиология","Тыныштық потенциалы мен әрекет потенциалының айырмашылығын түсіндір."],
+
+["Медициналық химия","Буферлік жүйелердің ағза үшін маңызын түсіндір."],
+
+["Медициналық химия","Қышқылдар мен негіздерге үш мысал келтір."],
+
+["Медициналық химия","Темір мен кальцийдің биологиялық маңызын сипатта."],
+
+["Биология","Митоз бен мейоздың айырмашылығын кестеге түсір."],
+
+["Биология","ДНҚ молекуласының құрылысын сипатта."],
+
+["Микробиология","Бактерия мен вирустың айырмашылығын салыстыр."],
+
+["Микробиология","Стерилизация мен дезинфекция ұғымдарын түсіндір."]
+
+];
+
+function showPage(id,btn){
+
+ document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
+
+ document.getElementById(id).classList.add('active');
+
+ document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));
+
+ if(btn)btn.classList.add('active');
+
+ document.getElementById('search').value='';
+
+}
+
+function renderSubjects(){
+
+ const html=subjects.map((s,i)=>`
+
+ <div class="card subject" data-search="${s.name.toLowerCase()}" onclick="openSubject(${i})">
+
+ <div class="emoji">${s.icon}</div><h3>${s.name}</h3>
+
+ <p>${s.desc}</p><span class="tag">${s.topics.length} тақырып</span>
+
+ </div>`).join('');
+
+ document.getElementById('subjectList').innerHTML=html;
+
+ document.getElementById('homeSubjects').innerHTML=html;
+
+}
+
+function openSubject(i){
+
+ const s=subjects[i];
+
+ document.getElementById('lessonArea').innerHTML=`
+
+ <h2>${s.icon} ${s.name}</h2>
+
+ <p>${s.desc}</p>
+
+ <div class="grid">${s.topics.map((t,j)=>`
+
+ <div class="card"><h3>${j+1}. ${t[0]}</h3>
+
+ <button class="btn" onclick="readTopic(${i},${j})">Материалды оқу</button></div>`).join('')}</div>`;
+
+ document.getElementById('lessonArea').scrollIntoView({behavior:'smooth'});
+
+}
+
+function readTopic(i,j){
+
+ const t=subjects[i].topics[j];
+
+ document.getElementById('lessonArea').innerHTML=`
+
+ <div class="lesson">
+
+ <span class="tag">${subjects[i].name}</span>
+
+ <h2>${t[0]}</h2><p>${t[1]}</p>
+
+ <button class="btn" onclick="openSubject(${i})">← Тақырыптарға оралу</button>
+
+ </div>`;
+
+ document.getElementById('lessonArea').scrollIntoView({behavior:'smooth'});
+
+ addProgress();
+
+}
+
+function renderQuiz(){
+
+ document.getElementById('quizArea').innerHTML=quizzes.map((q,i)=>`
+
+ <div class="question">
+
+ <b>${i+1}. ${q.q}</b>
+
+ ${q.o.map((v,j)=>`<label><input type="radio" name="q${i}" value="${j}">${v}</label>`).join('')}
+
+ </div>`).join('');
+
+}
+
+function checkQuiz(){
+
+ let score=0,answered=0;
+
+ quizzes.forEach((q,i)=>{
+
+ const a=document.querySelector(`input[name="q${i}"]:checked`);
+
+ if(a){answered++;if(+a.value===q.a)score++;}
+
+ });
+
+ const result=document.getElementById('quizResult');
+
+ if(answered!==quizzes.length){
+
+ result.textContent=`Барлық сұраққа жауап бер! Әзірге ${answered}/${quizzes.length} сұраққа жауап бердің.`;
+
+ return;
+
+ }
+
+ result.textContent=`Нәтиже: ${score}/${quizzes.length}. ${score>=15?'Өте жақсы! 🌟':score>=10?'Жақсы нәтиже! 👍':'Қайталап оқып, тағы байқап көр! 📚'}`;
+
+ localStorage.setItem('adaptScore',score);
+
+ document.getElementById('testScore').textContent=`${score}/${quizzes.length} дұрыс жауап`;
+
+ addProgress();
+
+}
+
+function renderTasks(){
+
+ document.getElementById('taskList').innerHTML=tasks.map((t,i)=>`
+
+ <div class="card"><span class="tag">${t[0]}</span>
+
+ <h3>Тапсырма ${i+1}</h3><p>${t[1]}</p>
+
+ <label><input type="checkbox" onchange="toggleTask(${i},this.checked)" ${getTasks().includes(i)?'checked':''}> Орындалды</label>
+
+ </div>`).join('');
+
+ updateProgress();
+
+}
+
+function getTasks(){return JSON.parse(localStorage.getItem('adaptTasks')||'[]')}
+
+function toggleTask(i,checked){
+
+ let a=getTasks();
+
+ a=checked?[...new Set([...a,i])]:a.filter(x=>x!==i);
+
+ localStorage.setItem('adaptTasks',JSON.stringify(a));
+
+ updateProgress();
+
+}
+
+function addProgress(){
+
+ localStorage.setItem('adaptVisited',+(localStorage.getItem('adaptVisited')||0)+1);
+
+ updateProgress();
+
+}
+
+function updateProgress(){
+
+ const n=getTasks().length;
+
+ document.getElementById('completed').textContent=n;
+
+ document.getElementById('progressBar').style.width=(n/tasks.length*100)+'%';
+
+ document.getElementById('progressText').textContent=`${n} / ${tasks.length} тапсырма орындалды`;
+
+ const score=localStorage.getItem('adaptScore');
+
+ document.getElementById('testScore').textContent=score===null?'Әзірге тест тапсырылған жоқ.':`${score}/${quizzes.length} дұрыс жауап`;
+
+}
+
+function searchItems(){
+
+ const q=document.getElementById('search').value.toLowerCase();
+
+ if(!q)return;
+
+ showPage('subjects',document.querySelectorAll('nav button')[1]);
+
+ document.getElementById('search').value=q;
+
+ document.querySelectorAll('#subjectList .card').forEach(c=>{
+
+ c.style.display=c.dataset.search.includes(q)||c.textContent.toLowerCase().includes(q)?'':'none';
+
+ });
+
+}
+
+renderSubjects();
+
+renderQuiz();
+
+renderTasks();
+
+updateProgress();
+
+</script>
+
+</body>
+
+</html>
